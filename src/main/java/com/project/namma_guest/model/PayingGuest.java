@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.locationtech.jts.geom.Point;
 
 @Entity
 @AllArgsConstructor
@@ -19,16 +20,15 @@ public class PayingGuest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long payingGuestId;
+    private String contactNumber;
     private String name;
     private String address;
     private String city;
     private String state;
     private String country;
-    private String contactNumber;
     private String email;
     private Integer advanceAmount;
     private Integer securityDeposit;
     private Sharing sharing;
-    private Double latitude;
-    private Double longitude;
+    private Point location;
 }
