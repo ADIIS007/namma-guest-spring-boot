@@ -9,31 +9,28 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.locationtech.jts.geom.Point;
+
+import java.util.Date;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class PayingGuest {
+public class PayingGuestRooms {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long payingGuestRoomId;
     private Long payingGuestId;
-    private String name;
-
-    //Address
-        private String address;
-    private String city;
-    private String state;
-    private String country;
-
-    //Contact
-    private String email;
-    private String contactNumber;
-
-    //Location
-    private Point location;
+    private String roomNumber;
+    private Sharing roomType;
+    private boolean isAvailable;
+    private Date availableFrom;
+    // monthly needed to be paid
+    private double rent;
+    // will be returned after vacating
+    private double securityDeposit;
+    // will not be returned after vacating
+    private double maintenance;
     private boolean isVerified;
-    private String guestType;
 }
