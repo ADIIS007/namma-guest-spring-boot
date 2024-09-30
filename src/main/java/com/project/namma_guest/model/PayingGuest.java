@@ -1,34 +1,46 @@
 package com.project.namma_guest.model;
 
-import com.project.namma_guest.data.Sharing;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
+import org.apache.catalina.User;
 import org.locationtech.jts.geom.Point;
+
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class PayingGuest {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name="paying_sequence",
+            sequenceName = "paying_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator ="paying_sequence"
+    )
     private Long payingGuestId;
-    private String contactNumber;
     private String name;
-    private String address;
+
+    //Address
+        private String address;
     private String city;
     private String state;
     private String country;
+
+    //Contact
     private String email;
-    private Integer advanceAmount;
-    private Integer securityDeposit;
-    private Sharing sharing;
+    private String contactNumber;
+
+    //Location
     private Point location;
+    private boolean isVerified;
+    private String guestType;
+
+
 }

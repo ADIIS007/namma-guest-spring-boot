@@ -22,9 +22,12 @@ public class PayingGuestService {
     public List<PayingGuest> getAllPayingGuest() {
         GeometryFactory geometryFactory = new GeometryFactory();
         Coordinate coordinate = new Coordinate(1.0, 2.0);
-        PayingGuest payingGuest = new PayingGuest(1L,"Test PG", "Test Address", "Test City", "Test State", "Test Country", "Test Contact Number", "Test Email", 1000, 1000, Sharing.ONE, geometryFactory.createPoint(coordinate));
-        payingGuestRepository.save(payingGuest);
+//        PayingGuest payingGuest = new PayingGuest(1L,"Test PG", "Test Address", "Test City", "Test State", "Test Country", "Test Contact Number", "Test Email", 1000, 1000, Sharing.ONE, geometryFactory.createPoint(coordinate));
+//        payingGuestRepository.save(payingGuest);
         List<PayingGuest> guest = payingGuestRepository.findAll();
         return guest;
+    }
+    public Boolean existsByEmail(String email) {
+        return payingGuestRepository.existsByEmail(email);
     }
 }
