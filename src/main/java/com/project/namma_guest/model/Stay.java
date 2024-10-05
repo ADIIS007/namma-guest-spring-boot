@@ -1,13 +1,7 @@
 package com.project.namma_guest.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Date;
 
@@ -16,9 +10,18 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Stay {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name="stay_seq",
+            sequenceName = "stay_seq",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "stay_seq"
+    )
     private Long stayId;
     private Long userUniqueId;
     private Long payingGuestId;
@@ -27,5 +30,4 @@ public class Stay {
     private Date endDate;
     private String comment;
     private int rating;
-
 }
