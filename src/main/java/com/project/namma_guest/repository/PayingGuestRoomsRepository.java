@@ -8,5 +8,4 @@ import java.util.Optional;
 public interface PayingGuestRoomsRepository extends JpaRepository<PayingGuestRooms,Long> {
     Optional<PayingGuestRooms> findByPayingGuestRoomId(Long payingGuestRoomId);
     Optional<PayingGuestRooms> findByPayingGuestId(Long payingGuestId);
-
 }
