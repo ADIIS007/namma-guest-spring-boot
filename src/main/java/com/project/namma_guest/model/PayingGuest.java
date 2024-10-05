@@ -41,6 +41,4 @@ public class PayingGuest {
     private Point location;
     private boolean isVerified;
     private String guestType;
-
-
 }

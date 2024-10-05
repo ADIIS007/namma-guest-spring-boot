@@ -1,6 +1,7 @@
 package com.project.namma_guest.model;
 
 import com.project.namma_guest.data.Sharing;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -37,9 +38,4 @@ public class PayingGuestRooms {
     // will not be returned after vacating
     private double maintenance;
     private boolean isVerified;
-
-    //room_details -> reviews
-
 }
-
-

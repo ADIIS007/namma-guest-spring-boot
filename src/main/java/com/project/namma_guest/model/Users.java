@@ -36,5 +36,4 @@ public class Users {
     private String OTP;
     private Date OTPGeneratedAt;
     private Boolean isVerified;
-
 }

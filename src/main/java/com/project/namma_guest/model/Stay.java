@@ -30,6 +30,4 @@ public class Stay {
     private Date endDate;
     private String comment;
     private int rating;
-
-
 }

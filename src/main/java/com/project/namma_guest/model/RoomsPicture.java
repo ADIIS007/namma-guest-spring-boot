@@ -25,6 +25,4 @@ public class RoomsPicture {
     private Long payingGuestRoomId;
     private String picturePath;
     private String pictureDescription;
-
-
 }
