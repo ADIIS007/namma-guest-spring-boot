@@ -3,13 +3,16 @@ package com.project.namma_guest.controller;
 import com.project.namma_guest.model.PayingGuest;
 import com.project.namma_guest.service.PayingGuestService;
 import jakarta.websocket.server.PathParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @RestController
+@RequestMapping("/user")
 public class HomeController {
     private final PayingGuestService payingGuestService;
     public HomeController(PayingGuestService payingGuestService) {
