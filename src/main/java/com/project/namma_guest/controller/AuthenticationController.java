@@ -26,6 +26,7 @@ public class AuthenticationController {
     @PostMapping("/send-otp")
     public ResponseEntity<String> sendOtp(@RequestBody Email email) {
         log.info("Sending OTP to {}", email);
+        // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class
         // Step 1 - Check the email is valid (must have @ ect) - 400 Bad Request
         // Step 2 - Check that there is a user with the following - 404 Not Found
         // Step 3 - OTP was not sent at lest 2 min ago - 429 Too Many Requests
@@ -36,6 +37,7 @@ public class AuthenticationController {
     //Verify the OTP sent to a specific Email
     @PostMapping("/verify-otp")
     public ResponseEntity<String> verifyOtp(@RequestBody VerifyOTP verifyOTP) {
+        // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class
         // Step 1 - Check the email is valid (must have @ ect) - 400 Bad Request
         // Step 2 - Check that there is a user with the following - 404 Not Found
         // Step 3 - OTP was sent at lest 2 min ago - 410 Gone/400 Bad Request
@@ -47,6 +49,7 @@ public class AuthenticationController {
     @PostMapping("/resend-otp")
     public ResponseEntity<String> resendOtp(@RequestBody Email email) {
         log.info("resending OTP to {}", email);
+        // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class
         // Step 1 - Check the email is valid (must have @ ect) - 400 Bad Request
         // Step 2 - Check that there is a user with the following - 404 Not Found
         // Step 3 - OTP was not sent at lest 2 min ago - 429 Too Many Requests

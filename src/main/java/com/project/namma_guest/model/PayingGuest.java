@@ -28,7 +28,7 @@ public class PayingGuest {
     private String name;
 
     //Address
-        private String address;
+    private String address;
     private String city;
     private String state;
     private String country;

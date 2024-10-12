@@ -25,14 +25,26 @@ public class Users {
             generator = "user_sequence"
     )
     private Long userUniqueId;
+
+    //personal data
     private String given_name;
     private String family_name;
+
+    //contact information
     @Column(unique = true)
     private String email;
     private String contactNumber;
     private Point currentLocation;
-    private Long currentPayingGuestId;
-    private Long ownsPayingGuestId;
+
+    //Relational properties
+    @ManyToOne
+    @JoinColumn(name = "current_paying_guest_id")
+    private PayingGuest currentPayingGuest;
+    @OneToOne
+    @JoinColumn(name = "owns_paying_guest_id")
+    private PayingGuest ownsPayingGuest;
+
+    //verification methods
     private String OTP;
     private Date OTPGeneratedAt;
     private Boolean isVerified;
