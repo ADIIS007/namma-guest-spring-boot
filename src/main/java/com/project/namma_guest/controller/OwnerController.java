@@ -47,7 +47,7 @@ public class OwnerController {
     }
 
     // Set up the Room while Creation
-    @PostMapping("/hostelCreation")
+    @PostMapping("/roomCreation")
     public ResponseEntity<?> setUpRoom(@RequestBody Id ownerId) {
         //TODO: This is same as the above function but may be bit complex
         return ResponseEntity.ok(":)");
@@ -90,9 +90,10 @@ public class OwnerController {
         return ResponseEntity.ok(str);
     }
 
+    //get the room details from database and to make a user look
     @GetMapping("/roomDetails/{roomId}")
     public ResponseEntity<?> roomDetails(@PathVariable String roomId) {
-        // TODO: Implement this method & return the details about a room in PG
+        //TODO: Implement this method & return the details about a room in PG
         // Step 0 - Check if the Id is valid or not (eg null) - 400 Bad Request
         // Step 1 - Check the payingGuestId if not exist - 404 NOT FOUND
         // Step 2 - Check the user id is the owner to paying guest id - 403 Forbidden
@@ -101,6 +102,21 @@ public class OwnerController {
         String str = "Hostel Details: getEmail";
         return ResponseEntity.ok(str);
     }
+
+    //This gives the list of people present in each room of the hostel also show the payment status and the expiary of the stay
+    @GetMapping("/membersInfo/{hostelId}")
+    public ResponseEntity<?> membersInfo(@PathVariable String hostelId) {
+        //TODO: Implement this method & return the details about people present in each room of the hostel
+        // Step 0 - Check if the Id is valid or not (eg null) - 400 Bad Request
+        // Step 1 - Check the payingGuestId if not exist - 404 NOT FOUND
+        // Step 2 - Check the user id is the owner to paying - 403 Forbidden
+        // Step 3 - Get the list of people present in each room of the hostel - 403 FORBIDDEN
+        // Step 4 - Return the details along with payment status and expiary of the stay
+        String str = "membersInfo";
+        return ResponseEntity.ok(str);
+    }
+
+    //TODO: Implement these methods later these are for advanced topics
 
     // Delete the hostel details from the database
     @DeleteMapping("/hostelDeletion")
@@ -116,5 +132,17 @@ public class OwnerController {
         //TODO: To be Implemented later on kindly dont touch it
         String str = "User Data: get the Email from JWT Token";
         return ResponseEntity.ok("TO BE IMPLEMENTED AT LAST");
+    }
+
+    //This is for Ads to be shown
+    @GetMapping("/ads")
+    public ResponseEntity<?> ads(@RequestBody String data) {
+        //TODO: Implement this method & return the ads for the PG
+        // Step 0 - Check if the Id is valid or not (eg null) - 400 Bad Request
+        // Step 1 - Check the payment status
+        // Step 2 - Confirm the latitude and longitude are correct
+        // Step 3 - Send ads created
+        String str = "Ads: getEmail";
+        return ResponseEntity.ok(str);
     }
 }

@@ -70,4 +70,29 @@ public class HomeController {
         // Step 4 - Return the details of the user if updated - 200 OK
         return ResponseEntity.ok("My Profile Updated");
     }
+
+    //API to request to join the hostel
+    @PostMapping("/join-hostel")
+    public ResponseEntity<String> joinHostel(@RequestBody String hostel) {
+        //TODO: Implement this method & return the details about the user
+        // Step 1 - Check the hostelId if not exist - 404 NOT FOUND
+        // Step 2 - Check the user is already a PG - 403 Forbidden
+        // Step 3 - Check the hostel is open for PGs - 403 Forbidden
+        // Step 4 - Check the user has enough balance - 403 Forbidden
+        // Step 5 - Request to join the hostel
+        return ResponseEntity.ok("Hostel joined successfully");
+    }
+
+    //TODO: These are the advanced methods that needs to be implemented with a bit of extra information & effort
+
+    //List of hostels near the specified latitude and longitude
+    @GetMapping("/hostelsNearMe/{latitude}/{longitude}")
+    public ResponseEntity<?> hostelsNearMe(@PathVariable double latitude, @PathVariable double longitude) {
+        //TODO: This lists the hostels near the given latitude and longitude
+        // Step 1 - Get the latitude and longitude & validate them
+        // Step 2 - Get the hostels near themselves
+        // Step 3 - if empty return null else
+        // Step 4 - Return the list
+        return ResponseEntity.ok("Hostels near me");
+    }
 }
