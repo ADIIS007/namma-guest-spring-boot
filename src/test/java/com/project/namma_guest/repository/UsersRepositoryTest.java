@@ -28,8 +28,6 @@ class UsersRepositoryTest {
         user1.setEmail("xyz@test.com");
         user1.setContactNumber("+1234567890");
         user1.setCurrentLocation(null);
-        user1.setCurrentPayingGuestId(3L);
-        user1.setOwnsPayingGuestId(2L);
         user1.setOTP("123456");
         user1.setOTPGeneratedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
         user1.setIsVerified(false);
@@ -63,21 +61,5 @@ class UsersRepositoryTest {
         assertTrue(optionalUser2.isPresent());
         Users user2 = optionalUser2.get();
         assertEquals("123", user2.getOTP());
-    }
-
-    @Test
-    public void testFindByCurrentPayingGuestId(){
-        Optional<Users> optionalUser = usersRepository.findByCurrentPayingGuestId(3L);
-        assertTrue(optionalUser.isPresent());
-        Users user = optionalUser.get();
-        assertEquals(3L, user.getCurrentPayingGuestId());
-    }
-
-    @Test
-    public void testFindByOwnsPayingGuestId(){
-        Optional<Users> optionalUser = usersRepository.findByOwnsPayingGuestId(2L);
-        assertTrue(optionalUser.isPresent());
-        Users user = optionalUser.get();
-        assertEquals(2L, user.getOwnsPayingGuestId());
     }
 }
