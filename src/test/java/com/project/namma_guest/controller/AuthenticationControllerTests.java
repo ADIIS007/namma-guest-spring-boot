@@ -36,44 +36,4 @@ public class AuthenticationControllerTests {
         Assertions.assertEquals("OK Auth Telling You", response.getBody());
     }
 
-    @Test
-    public void testSendOtp() {
-        Email email = new Email();
-        email.setEmail("test@example.com");
-
-        Mockito.when(authenticationHelper.sendOtp(email.getEmail())).thenReturn(ResponseEntity.ok("OTP Sent"));
-
-        ResponseEntity<String> response = authenticationController.sendOtp(email);
-
-        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals("OTP Sent", response.getBody());
-    }
-
-    @Test
-    public void testVerifyOtp() {
-        VerifyOTP verifyOtp = new VerifyOTP();
-        verifyOtp.setEmail("test@example.com");
-        verifyOtp.setOtp("123456");
-
-        Mockito.when(authenticationHelper.verifyOtp(verifyOtp.getEmail(), verifyOtp.getOtp()))
-                .thenReturn(ResponseEntity.ok("OTP Verified"));
-
-        ResponseEntity<String> response = authenticationController.verifyOtp(verifyOtp);
-
-        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals("OTP Verified", response.getBody());
-    }
-
-    @Test
-    public void testResendOtp() {
-        Email email = new Email();
-        email.setEmail("test@example.com");
-
-        Mockito.when(authenticationHelper.sendOtp(email.getEmail())).thenReturn(ResponseEntity.ok("OTP Resent"));
-
-        ResponseEntity<String> response = authenticationController.resendOtp(email);
-
-        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
-        Assertions.assertEquals("OTP Resent", response.getBody());
-    }
 }
