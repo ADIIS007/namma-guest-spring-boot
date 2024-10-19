@@ -28,5 +28,28 @@ class UtilitiesTest {
         assertFalse(Utilities.isValidEmail("test1gmail@.com"));
 
         }
+    @Test
+    public void testPhoneNumber(){
+        assertTrue(Utilities.isPhoneValid("9638527101"));
+        assertTrue(Utilities.isPhoneValid("9638527112"));
+    }
 
+    @Test
+    public void testPhoneNumberWithSpaces(){
+        assertFalse(Utilities.isPhoneValid("96385 27101"));
+        assertFalse(Utilities.isPhoneValid("963 8527 101"));
+    }
+
+    @Test
+    public void testPhoneNumberWithSpecialCharacters(){
+        assertFalse(Utilities.isPhoneValid("9638@27101"));
+        assertFalse(Utilities.isPhoneValid("9638@271_0"));
+        assertFalse(Utilities.isPhoneValid("**********"));
+    }
+
+    @Test
+    public void testPhoneNumberWithIncorrectSize(){
+        assertFalse(Utilities.isPhoneValid("963857112"));
+        assertFalse(Utilities.isPhoneValid("96322857112"));
+    }
 }

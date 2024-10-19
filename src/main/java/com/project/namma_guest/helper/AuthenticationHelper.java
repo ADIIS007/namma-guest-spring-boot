@@ -8,7 +8,7 @@ import com.project.namma_guest.service.Utilities;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -54,5 +54,16 @@ public class AuthenticationHelper {
         String otp = utilities.generateOTP();
         userService.updateOTP(email, otp);
         return new ResponseEntity("OTP sent to " + email,HttpStatus.OK);
+    }
+    public ResponseEntity<String> phoneNumberValidation(String contactNumber) {
+        boolean isPhoneNumberValid = Utilities.isPhoneValid(contactNumber);
+        if(isPhoneNumberValid){
+            log.info("Phone number is valid");
+            return new ResponseEntity<>("Phone number is valid", HttpStatus.OK);
+        }
+        else{
+            log.info("Phone number is not valid");
+            return new ResponseEntity<>("Phone number is not valid", HttpStatus.BAD_REQUEST);
+        }
     }
 }
