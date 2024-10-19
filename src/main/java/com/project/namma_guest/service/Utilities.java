@@ -31,6 +31,16 @@ public class Utilities {
         }
         return hasAtSymbol && hasDot && email.indexOf('@') < email.lastIndexOf('.') && (email.indexOf('.') - email.lastIndexOf('@'))> 1;
     }
+    public static boolean isPhoneValid(String phone) {
+        if(phone == null || phone.isEmpty()) return false;
+        if(phone.length() != 10) return false;
+        for (int i = 0; i < phone.length(); i++) {
+            char ch = phone.charAt(i);
+            if (!Character.isDigit(ch)) return false;
+        }
+        return true;
+    }
+
 
 
 }
