@@ -1,4 +1,4 @@
-package com.project.namma_guest.service;
+package com.project.namma_guest.helper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;

@@ -1,17 +1,17 @@
-package com.project.namma_guest.service;
+package com.project.namma_guest.helper;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class Utilities {
-    public String generateOTP() {
+    public static String generateOTP() {
         int randomPin1 = (int) (Math.random()*10);
         int randomPin2 = (int) (Math.random()*10);
         int randomPin3 = (int) (Math.random()*10);
         int randomPin4 = (int) (Math.random()*10);
-        String otp = randomPin1 + "" + randomPin2 + "" + randomPin3 + "" + randomPin4;
-        return otp;
+        return randomPin1 + randomPin2 + randomPin3 + randomPin4 +"";
     }
+
     public static boolean isValidEmail(String email) {
         if (email == null || email.isEmpty()) return false;
         boolean hasAtSymbol = false;
@@ -31,6 +31,7 @@ public class Utilities {
         }
         return hasAtSymbol && hasDot && email.indexOf('@') < email.lastIndexOf('.') && (email.indexOf('.') - email.lastIndexOf('@'))> 1;
     }
+
     public static boolean isPhoneValid(String phone) {
         if(phone == null || phone.isEmpty()) return false;
         if(phone.length() != 10) return false;
@@ -40,7 +41,4 @@ public class Utilities {
         }
         return true;
     }
-
-
-
 }
