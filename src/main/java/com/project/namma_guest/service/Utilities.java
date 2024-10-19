@@ -12,8 +12,25 @@ public class Utilities {
         String otp = randomPin1 + "" + randomPin2 + "" + randomPin3 + "" + randomPin4;
         return otp;
     }
-    public boolean isValidEmail(String email) {
-        return true;
-//        return email.matches("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");
+    public static boolean isValidEmail(String email) {
+        if (email == null || email.isEmpty()) return false;
+        boolean hasAtSymbol = false;
+        boolean hasDot = false;
+        for (int i = 0; i < email.length(); i++) {
+            char ch = email.charAt(i);
+            if (!Character.isLetterOrDigit(ch) && ch != '_' && ch != '@' && ch != '.') {
+                return false;
+            }
+            if (ch == '@') {
+                if (hasAtSymbol) return false;
+                hasAtSymbol = true;
+            }
+            if (ch == '.') {
+                hasDot = true;
+            }
+        }
+        return hasAtSymbol && hasDot && email.indexOf('@') < email.lastIndexOf('.') && (email.indexOf('.') - email.lastIndexOf('@'))> 1;
     }
+
+
 }
