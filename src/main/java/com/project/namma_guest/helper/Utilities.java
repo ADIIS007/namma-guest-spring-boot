@@ -1,5 +1,6 @@
 package com.project.namma_guest.helper;
 
+import com.project.namma_guest.DTO.Request.Hostel;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,6 +40,24 @@ public class Utilities {
             char ch = phone.charAt(i);
             if (!Character.isDigit(ch)) return false;
         }
+        return true;
+    }
+
+    public static boolean isValidString(String text, int length) {
+        return text == null || text.isEmpty() || text.length() >= length;
+    }
+
+    public static boolean isValidHostel(Hostel hostel) {
+        if(hostel==null) return false;
+        if(!Utilities.isValidEmail(hostel.getEmail())) return false;
+        if(!Utilities.isPhoneValid(hostel.getContactNumber())) return false;
+        if(!Utilities.isPhoneValid(hostel.getWhatsappNumber())) return false;
+        if(Utilities.isValidString(hostel.getName(), 7)) return false;
+        if(Utilities.isValidString(hostel.getAddress(), 15)) return false;
+        if(Utilities.isValidString(hostel.getCity(), 7)) return false;
+        if(Utilities.isValidString(hostel.getState(), 7)) return false;
+        if(Utilities.isValidString(hostel.getCountry(), 7)) return false;
+        if(hostel.getLocation()==null) return false;
         return true;
     }
 }

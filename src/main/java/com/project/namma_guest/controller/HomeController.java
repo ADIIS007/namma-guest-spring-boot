@@ -2,7 +2,6 @@ package com.project.namma_guest.controller;
 
 import com.project.namma_guest.model.PayingGuest;
 import com.project.namma_guest.service.PayingGuestService;
-import jakarta.websocket.server.PathParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,8 +50,8 @@ public class HomeController {
     }
 
     //load all the data regarding the user
-    @GetMapping("/my-profile/{id}")
-    public ResponseEntity<String> myProfile(@PathVariable String id) {
+    @GetMapping("/my-profile/{emailId}")
+    public ResponseEntity<String> myProfile(@PathVariable String emailId) {
         //TODO: Implement this method & return the details about the user
         // Step 1 - Get the user details using Email (later from the JWT token) - 404 Not Found
         // Step 2 - If user not found - return 404 Not Found status code

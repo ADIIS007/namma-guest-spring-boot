@@ -70,7 +70,7 @@ public class AuthenticationController {
         try {
             return userService.resendOtp(email.getEmail());
         } catch (TimeoutException e) {
-            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("OTP Expired");
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("Wait before requesting for resending OTP");
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         } catch (IllegalArgumentException e) {

@@ -1,5 +1,7 @@
 package com.project.namma_guest.controller;
 
+import com.project.namma_guest.DTO.Request.Email;
+import com.project.namma_guest.DTO.Request.Hostel;
 import com.project.namma_guest.DTO.Request.Id;
 import com.project.namma_guest.service.PayingGuestService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,23 +26,23 @@ public class OwnerController {
 
     // Set up the Hostel while onboarding
     @PostMapping("/hostelCreation")
-    public ResponseEntity<?> setUpHostel(@RequestBody Id ownerId) {
-        log.info("Setting up hostel for owner with id: {}", ownerId.getId());
+    public ResponseEntity<?> setUpHostel(@RequestBody Email email) {
+        log.info("Setting up hostel for owner with id: {}", email.getEmail());
         try{
-            Long payingGuestId = payingGuestService.setUpHostel(ownerId.getId());
+            Long payingGuestId = payingGuestService.setUpHostel(email.getEmail());
             return ResponseEntity.ok(payingGuestId);
         } catch (Exception e) {
             if (e.getMessage().contains("User already has a hostel")) {
-                log.info("User with id - {} already has a hostel assigned.",ownerId.getId());
+                log.info("User with id - {} already has a hostel assigned.",email.getEmail());
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("User already has a hostel assigned.");
             } else if (e.getMessage().contains("Owner not found")) {
-                log.info("Owner with id - {} not found.", ownerId.getId());
+                log.info("Owner with id - {} not found.", email.getEmail());
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Owner not found.");
             } else if (e.getMessage().contains("Improper Data Present")) {
-                log.info("Owner with id - {} had made a request with improper data",ownerId.getId());
+                log.info("Owner with id - {} had made a request with improper data",email.getEmail());
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Improper Data Present.");
             } else {
-                log.error("An error occurred: {} when owner with id - {} requested for making hostel", e.getMessage(), ownerId.getId());
+                log.error("An error occurred: {} when owner with id - {} requested for making hostel", e.getMessage(), email.getEmail());
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal Server Error.");
             }
         }
@@ -54,15 +56,9 @@ public class OwnerController {
     }
 
     // Update the Hostel details after creating
-    @PutMapping("/hostelUpdate/{hostelId}")
-    public ResponseEntity<String> hostelDataUpdate(@RequestBody String hostelData, @PathVariable String hostelId) {
-        // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class - Unprocessable Entity 422
-        // Step 1 - Validate the request (input validation, data format etc.) - 400 Bad Request
-        // Step 2 - Get the UserId & HostelId & Check weather the person who is trying to update is the owner only - 403 Forbidden
-        // Step 3 - Update the hostel details (only update allowed fields) - 403 Forbidden
-        // Step 4 - Return the details of the hostel if updated - 200 OK
-        String str = "Hostel Data: " + hostelData;
-        return ResponseEntity.ok(str);
+    @PutMapping("/hostelUpdate/{emailId}")
+    public ResponseEntity<?> hostelDataUpdate(@RequestBody Hostel hostelData, @PathVariable String emailId) {
+        return payingGuestService.updateHostel(hostelData, emailId);
     }
 
     // Update the Hostel details after creating

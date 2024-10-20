@@ -3,6 +3,7 @@ package com.project.namma_guest.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.apache.catalina.User;
+import org.hibernate.annotations.Type;
 import org.locationtech.jts.geom.Point;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class PayingGuest {
     //Contact
     private String email;
     private String contactNumber;
+    private String whatsappNumber;
 
     //Location
     private Point location;
