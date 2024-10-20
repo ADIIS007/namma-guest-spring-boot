@@ -37,19 +37,23 @@ public class UserService {
 
         boolean isEmailValid = Utilities.isValidEmail(email);
         if (isEmailValid) {
-           Users user = usersRepository.findUsersByEmail(email);
+            Users user = usersRepository.findUsersByEmail(email);
             String otp = Utilities.generateOTP();
             if(user!=null) {
                 Date date = user.getOTPGeneratedAt();
                 if (date!= null && (date.getTime() + 60 * 1000) > System.currentTimeMillis()) {
                     throw new IOException("OTP was sent at least 2 minutes ago");
                 }
+                user.setOTP(otp);
+                user.setOTPGeneratedAt(new java.util.Date());
+                usersRepository.save(user);
                 log.info("User already exists, updating OTP");
             } else {
                 user = new Users();
                 user.setOTP(otp);
                 user.setEmail(email);
                 user.setOTPGeneratedAt(new java.util.Date());
+                usersRepository.save(user);
                 log.info("New User created with OTP");
             }
             mailService.sendMail(email, "OTP for Namma Guest", "Your OTP for Namma Guest is: " + otp);
@@ -90,25 +94,32 @@ public class UserService {
         }
     }
 
-//    public Users updateOTP(String email, String otp) {
-//        Users user = usersRepository.findByEmail(email);
-//        user.setOTP(otp);
-//        user.setOTPGeneratedAt(new java.util.Date());
-//        return usersRepository.save(user);
-//    }
-//
-//    public Users verifyOTP(String email, String otp) {
-//        Users user = usersRepository.findByEmail(email);
-//        if(user.getOTP().equals(otp)) {
-//            Long temp = user.getOTPGeneratedAt().getTime() + 10 * 60 * 1000;
-//            if (user.getOTPGeneratedAt().getTime() + 10 * 60 * 1000 > System.currentTimeMillis()) {
-//                user.setIsVerified(true);
-//                return usersRepository.save(user);
-//            } else {
-//                return null;
-//            }
-//        } else {
-//            return null;
-//        }
-//    }
+    @Transactional
+    public ResponseEntity<String> resendOtp(String email) throws Exception {
+        //TODO: This is to resend the OTP for given email
+        // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class
+        // Step 1 - Check the email is valid (must have @ ect) - 400 Bad Request
+        // Step 2 - Check that there is a user with the following - 404 Not Found
+        // Step 3 - OTP was not sent at lest 2 min ago - 429 Too Many Requests
+        // Step 4 - SEND OTP & time before it cant resend again - 200 OK
+        if(Utilities.isValidEmail(email)) {
+            Users user = usersRepository.findUsersByEmail(email);
+            if(user!= null) {
+                if((user.getOTPGeneratedAt().getTime() + 2 *60 * 1000) < (System.currentTimeMillis())) {
+                    String otp = Utilities.generateOTP();
+                    user.setOTP(otp);
+                    user.setOTPGeneratedAt(new java.util.Date());
+                    mailService.sendMail(email, "OTP for Namma Guest", "Your OTP for Namma Guest is: " + otp);
+                    usersRepository.save(user);
+                    return new ResponseEntity<>("OTP sent to " + email, HttpStatus.OK);
+                } else {
+                    throw new TimeoutException("Wait for 2 min before retrying");
+                }
+            } else {
+                throw new NullPointerException("No user found with given email");
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid Email Address");
+        }
+    }
 }

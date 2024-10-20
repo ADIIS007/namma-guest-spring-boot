@@ -9,7 +9,7 @@ public class Utilities {
         int randomPin2 = (int) (Math.random()*10);
         int randomPin3 = (int) (Math.random()*10);
         int randomPin4 = (int) (Math.random()*10);
-        return randomPin1 + randomPin2 + randomPin3 + randomPin4 +"";
+        return randomPin1 +""+ randomPin2 + randomPin3 + randomPin4;
     }
 
     public static boolean isValidEmail(String email) {

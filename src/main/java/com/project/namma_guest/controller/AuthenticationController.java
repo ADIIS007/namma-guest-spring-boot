@@ -67,11 +67,16 @@ public class AuthenticationController {
     @PostMapping("/resend-otp")
     public ResponseEntity<String> resendOtp(@RequestBody Email email) {
         log.info("resending OTP to {}", email);
-        // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class
-        // Step 1 - Check the email is valid (must have @ ect) - 400 Bad Request
-        // Step 2 - Check that there is a user with the following - 404 Not Found
-        // Step 3 - OTP was not sent at lest 2 min ago - 429 Too Many Requests
-        // Step 4 - SEND OTP & time before it cant resend again - 200 OK
-        return ResponseEntity.ok(email.getEmail());
+        try {
+            return userService.resendOtp(email.getEmail());
+        } catch (TimeoutException e) {
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("OTP Expired");
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Email Address");
+        } catch (Exception  e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Some problem occurred while processing the request");
+        }
     }
 }
