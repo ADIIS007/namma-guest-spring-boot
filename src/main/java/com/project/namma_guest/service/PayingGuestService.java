@@ -83,4 +83,16 @@ public class PayingGuestService {
         payingGuestRepository.save(payingGuest);
         return ResponseEntity.ok(payingGuest);
     }
+
+    public ResponseEntity<PayingGuest> getPayingGuest(Long id) {
+        //TODO: Implement this method & return the details about a PG
+        // Step 1 - Check the payingGuestId if not exist - 404 NOT FOUND
+        // Step 2 - Get the details of the PG weather visibility is public or not - 403 FORBIDDEN
+        // Step 3 - Return the details
+        log.info("Get Paying Guest by Id triggered. Id : {} ", id);
+        if(id==null) throw new IllegalArgumentException("id cannot be null");
+        PayingGuest pagingGuest = payingGuestRepository.findPayingGuestByPayingGuestId(id);
+        if(pagingGuest==null) throw new NullPointerException("pagingGuest cannot be null");
+        return ResponseEntity.ok(pagingGuest);
+    }
 }

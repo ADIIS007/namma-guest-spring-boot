@@ -1,8 +1,10 @@
 package com.project.namma_guest.controller;
 
+import com.project.namma_guest.DTO.Request.Id;
 import com.project.namma_guest.model.PayingGuest;
 import com.project.namma_guest.service.PayingGuestService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,13 +42,16 @@ public class HomeController {
 
     // Get details of a given paying guest
     @GetMapping("/about-pg/{id}")
-    public ResponseEntity<PayingGuest> aboutPg(@PathVariable String id) {
-        //TODO: Implement this method & return the details about a PG
-        // Step 1 - Check the payingGuestId if not exist - 404 NOT FOUND
-        // Step 2 - Get the details of the PG weather visibility is public or not - 403 FORBIDDEN
-        // Step 3 - Return the details
-        PayingGuest temp=new PayingGuest();
-        return ResponseEntity.ok(temp);
+    public ResponseEntity<?> aboutPg(@PathVariable Long id) {
+        try {
+            return payingGuestService.getPayingGuest(id);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Paying guest ID is invalid");
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Paying Guest associated with PayingGuestId");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something when wrong while getting the Pg Data");
+        }
     }
 
     //load all the data regarding the user
