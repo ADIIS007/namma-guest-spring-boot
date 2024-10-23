@@ -4,6 +4,7 @@ import com.project.namma_guest.DTO.Request.Id;
 import com.project.namma_guest.model.PayingGuest;
 import com.project.namma_guest.service.PayingGuestService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,18 +27,22 @@ public class HomeController {
         return ResponseEntity.ok("Welcome to Namma Guest this is a test API!");
     }
 
-    // Get list of PGs within a given distance from the given coordinates
-    @PostMapping("/list-pgs-within-distance")
-    public ResponseEntity<List<PayingGuest>> listPGsByDistance(
-            @RequestParam double longitude,
-            @RequestParam double latitude,
-            @RequestParam(defaultValue = "5.0") double distance) {
+    // Get list of PGs (with limit i.e, pagination)
+    @PostMapping("/list-pgs")
+    public ResponseEntity<?> listPGsByDistance( @RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "25") int size) {
         //TODO: Implement this method & return the list of PGs within the given distance
         // Step 1 - Check the latitude and longitude
         // Step 2 - Get the list of PGs within the given distance
         // Step 3 - Return the list
-        List<PayingGuest>temp=new ArrayList<PayingGuest>();
-        return ResponseEntity.ok(temp);
+        try {
+            return payingGuestService.listNPayingGuest(page,size);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Some problem occurred while processing the request");
+        }
     }
 
     // Get details of a given paying guest

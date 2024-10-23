@@ -13,8 +13,12 @@ import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.awt.print.Pageable;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -94,5 +98,19 @@ public class PayingGuestService {
         PayingGuest pagingGuest = payingGuestRepository.findPayingGuestByPayingGuestId(id);
         if(pagingGuest==null) throw new NullPointerException("pagingGuest cannot be null");
         return ResponseEntity.ok(pagingGuest);
+    }
+
+    public ResponseEntity<?> listNPayingGuest(int page,int size) {
+        //TODO: Implement this method & return the list of PGs within the given distance
+        // Step 1 - N must be between 25 and 100
+        // Step 2 - Get the details of the PG weather visibility is public or not
+        // Step 3 - Return the list
+        log.info("List N Paying Guest triggered. Page : {} Size : {} ", page, size);
+        if(size<25 || size>100) throw new IllegalArgumentException("size must be between 25 and 100 records");
+        if(page<1) throw new IllegalArgumentException("Illegal page value provided");
+        Pageable pageable = (Pageable) PageRequest.of(page, size);
+        List<PayingGuest> listOfPayingGuestWithPagination = payingGuestRepository.findAll(pageable);
+        if(listOfPayingGuestWithPagination==null) throw new NullPointerException("There is no paying guest found");
+        return ResponseEntity.ok(listOfPayingGuestWithPagination);
     }
 }
