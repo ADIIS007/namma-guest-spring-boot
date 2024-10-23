@@ -9,15 +9,14 @@ import com.project.namma_guest.repository.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.CoordinateSequence;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -108,9 +107,8 @@ public class PayingGuestService {
         log.info("List N Paying Guest triggered. Page : {} Size : {} ", page, size);
         if(size<25 || size>100) throw new IllegalArgumentException("size must be between 25 and 100 records");
         if(page<1) throw new IllegalArgumentException("Illegal page value provided");
-        Pageable pageable = (Pageable) PageRequest.of(page, size);
-        List<PayingGuest> listOfPayingGuestWithPagination = payingGuestRepository.findAll(pageable);
-        if(listOfPayingGuestWithPagination==null) throw new NullPointerException("There is no paying guest found");
+        Pageable pageable = PageRequest.of(page, size);
+        List<PayingGuest> listOfPayingGuestWithPagination = payingGuestRepository.findAll(pageable).stream().toList();
         return ResponseEntity.ok(listOfPayingGuestWithPagination);
     }
 }

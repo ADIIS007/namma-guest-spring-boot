@@ -1,16 +1,10 @@
 package com.project.namma_guest.controller;
 
-import com.project.namma_guest.DTO.Request.Id;
-import com.project.namma_guest.model.PayingGuest;
 import com.project.namma_guest.service.PayingGuestService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @RestController
