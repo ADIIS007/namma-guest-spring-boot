@@ -87,6 +87,7 @@ public class PayingGuestService {
         return ResponseEntity.ok(payingGuest);
     }
 
+    @Transactional
     public ResponseEntity<PayingGuest> getPayingGuest(Long id) {
         //TODO: Implement this method & return the details about a PG
         // Step 1 - Check the payingGuestId if not exist - 404 NOT FOUND
@@ -99,6 +100,7 @@ public class PayingGuestService {
         return ResponseEntity.ok(pagingGuest);
     }
 
+    @Transactional
     public ResponseEntity<?> listNPayingGuest(int page,int size) {
         //TODO: Implement this method & return the list of PGs within the given distance
         // Step 1 - N must be between 25 and 100
