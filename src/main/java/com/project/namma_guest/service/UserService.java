@@ -122,4 +122,25 @@ public class UserService {
             throw new IllegalArgumentException("Invalid Email Address");
         }
     }
+
+    public ResponseEntity<String> setUserType(String type, String email) {
+        //TODO: This is to resend the OTP for given email
+        // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class
+        // Step 1 - Validate the type parameter must ber user or owner - 400 Bad Request
+        // Step 2 - Check the email is valid (must have @ ect) - 400 Bad Request
+        // Step 3 - Check that there is a user with the following - 404 Not Found
+        // Step 4 - Check that user is not a user or owner already - 409 Conflict
+        // Step 5 - set the user type to
+        return ResponseEntity.ok("To be Implemented");
+    }
+
+    public ResponseEntity<String> getUserType(String email) {
+        //TODO: This is to resend the OTP for given email
+        // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class
+        // Step 2 - Check the email is valid (must have @ ect) - 400 Bad Request
+        // Step 3 - Check that there is a user with the following - 404 Not Found
+        // Step 4 - Check that user is a user or owner already - 409 Conflict
+        // Step 6 - Retrieve the user type and send back
+        return ResponseEntity.ok("To be Implemented");
+    }
 }

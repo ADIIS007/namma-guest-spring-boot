@@ -66,7 +66,7 @@ public class AuthenticationController {
     // This should re-generate the email and
     @PostMapping("/resend-otp")
     public ResponseEntity<String> resendOtp(@RequestBody Email email) {
-        log.info("resending OTP to {}", email);
+        log.info("resending OTP to {}", email.getEmail());
         try {
             return userService.resendOtp(email.getEmail());
         } catch (TimeoutException e) {
@@ -76,6 +76,28 @@ public class AuthenticationController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Email Address");
         } catch (Exception  e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Some problem occurred while processing the request");
+        }
+    }
+
+    //TODO To be implemented in the userService Repo
+    @PostMapping("/userType/{type}")
+    public ResponseEntity<String> setUserType(@RequestBody Email email, @PathVariable String type) {
+        log.info("User type chosen as {} for email {}", type, email.getEmail());
+        try{
+            return userService.setUserType(type, email.getEmail());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Some problem occurred while processing the request");
+        }
+    }
+
+    //TODO To be implemented in the userService Repo
+    @PostMapping("/userType")
+    public ResponseEntity<String> getUserType(@RequestBody Email email) {
+        log.info("User is logging in with email {}", email.getEmail());
+        try{
+            return userService.getUserType(email.getEmail());
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Some problem occurred while processing the request");
         }
     }
