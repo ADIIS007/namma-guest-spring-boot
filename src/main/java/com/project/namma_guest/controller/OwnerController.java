@@ -64,6 +64,7 @@ public class OwnerController {
     // Update the Hostel details after creating
     @PutMapping("/RoomUpdate/{roomId}")
     public ResponseEntity<String> roomDataUpdate(@PathVariable String roomId, @RequestBody String roomData) {
+        //TODO: Implement this method & return the room data
         // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class - Unprocessable Entity 422
         // Step 1 - Validate the request (input validation, data format etc.) - 400 Bad Request
         // Step 2 - Get the UserId & HostelId & Check weather the person who is trying to update is the owner only - 403 Forbidden
@@ -76,7 +77,7 @@ public class OwnerController {
     // Load the hostel details from the database & to make a user look
     @GetMapping("/hostelDetails/{id}")
     public ResponseEntity<String> hostelDetails(@PathVariable String id) {
-        // TODO: Implement this method & return the details about a PG
+        //TODO: Implement this method & return the details about a PG
         // Step 0 - Check if the Id is valid or not (eg null) - 400 Bad Request
         // Step 1 - Check the payingGuestId if not exist - 404 NOT FOUND
         // Step 2 - Check the user id is the owner to paying guest id - 403 Forbidden
