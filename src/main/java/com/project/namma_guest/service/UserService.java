@@ -79,7 +79,7 @@ public class UserService {
                 Date date = user.getOTPGeneratedAt();
                 if (date != null && (date.getTime() + 5 * 60 * 1000) >= System.currentTimeMillis()) {
                     if (user.getOTP().equals(otp)) {
-                        return ResponseEntity.ok(email);
+                        return ResponseEntity.ok("Owner");
                     } else {
                         throw new IOException("Invalid OTP");
                     }
@@ -131,16 +131,6 @@ public class UserService {
         // Step 3 - Check that there is a user with the following - 404 Not Found
         // Step 4 - Check that user is not a user or owner already - 409 Conflict
         // Step 5 - set the user type to
-        return ResponseEntity.ok("To be Implemented");
-    }
-
-    public ResponseEntity<String> getUserType(String email) {
-        //TODO: This is to resend the OTP for given email
-        // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class
-        // Step 2 - Check the email is valid (must have @ ect) - 400 Bad Request
-        // Step 3 - Check that there is a user with the following - 404 Not Found
-        // Step 4 - Check that user is a user or owner already - 409 Conflict
-        // Step 6 - Retrieve the user type and send back
         return ResponseEntity.ok("To be Implemented");
     }
 }
