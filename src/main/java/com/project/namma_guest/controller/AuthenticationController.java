@@ -90,15 +90,4 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Some problem occurred while processing the request");
         }
     }
-
-    //TODO To be implemented in the userService Repo
-    @PostMapping("/userType")
-    public ResponseEntity<String> getUserType(@RequestBody Email email) {
-        log.info("User is logging in with email {}", email.getEmail());
-        try{
-            return userService.getUserType(email.getEmail());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Some problem occurred while processing the request");
-        }
-    }
 }
