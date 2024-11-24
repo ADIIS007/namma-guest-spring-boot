@@ -1,5 +1,6 @@
 package com.project.namma_guest.service;
 
+import com.project.namma_guest.DTO.Response.StringResponse;
 import com.project.namma_guest.helper.MailService;
 import com.project.namma_guest.helper.Utilities;
 import com.project.namma_guest.model.Users;
@@ -57,7 +58,7 @@ public class UserService {
                 log.info("New User created with OTP");
             }
             mailService.sendMail(email, "OTP for Namma Guest", "Your OTP for Namma Guest is: " + otp);
-            log.info("OTP sent to " + email + " OTP: " + otp);
+            log.info("OTP sent to {} OTP: {}", email, otp);
             return new ResponseEntity<>("OTP sent to " + email, HttpStatus.OK);
         } else {
             throw new IllegalArgumentException("Invalid Email Address");
