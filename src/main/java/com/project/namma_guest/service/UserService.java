@@ -1,6 +1,5 @@
 package com.project.namma_guest.service;
 
-import com.project.namma_guest.DTO.Response.StringResponse;
 import com.project.namma_guest.helper.MailService;
 import com.project.namma_guest.helper.Utilities;
 import com.project.namma_guest.model.Users;
