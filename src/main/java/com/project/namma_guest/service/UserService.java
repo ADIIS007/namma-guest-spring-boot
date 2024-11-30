@@ -79,7 +79,11 @@ public class UserService {
                 Date date = user.getOTPGeneratedAt();
                 if (date != null && (date.getTime() + 5 * 60 * 1000) >= System.currentTimeMillis()) {
                     if (user.getOTP().equals(otp)) {
-                        return ResponseEntity.ok("Owner");
+                        if(user.getUserType() == null) {
+                            return ResponseEntity.ok("TODO");
+                        } else {
+                            return ResponseEntity.ok(user.getUserType().toUpperCase());
+                        }
                     } else {
                         throw new IOException("Invalid OTP");
                     }
@@ -131,6 +135,25 @@ public class UserService {
         // Step 3 - Check that there is a user with the following - 404 Not Found
         // Step 4 - Check that user is not a user or owner already - 409 Conflict
         // Step 5 - set the user type to
-        return ResponseEntity.ok("To be Implemented");
+        if(Utilities.isValidEmail(email)){
+            Users user = usersRepository.findUsersByEmail(email);
+            if(user!= null) {
+                if(user.getUserType()!=null) {
+                    if (type.equalsIgnoreCase("USER") || type.equalsIgnoreCase("OWNER")) {
+                        user.setUserType(type.toUpperCase());
+                        usersRepository.save(user);
+                        return ResponseEntity.ok("User Type updated successfully");
+                    } else {
+                        throw new IllegalArgumentException("Invalid Type of usertype to set");
+                    }
+                } else {
+                    throw new IllegalArgumentException("User is already a specified");
+                }
+            } else {
+                throw new NullPointerException("No user found with given email");
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid Email Address");
+        }
     }
 }

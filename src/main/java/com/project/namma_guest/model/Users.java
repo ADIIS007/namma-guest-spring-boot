@@ -37,6 +37,7 @@ public class Users {
     private Point currentLocation;
 
     //Relational properties
+    private String userType;
     @ManyToOne
     @JoinColumn(name = "current_paying_guest_id")
     private PayingGuest currentPayingGuest;
