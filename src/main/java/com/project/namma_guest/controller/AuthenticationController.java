@@ -86,6 +86,10 @@ public class AuthenticationController {
         log.info("User type chosen as {} for email {}", type, email.getEmail());
         try{
             return userService.setUserType(type, email.getEmail());
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User is not found");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Some problem occurred while processing the request");
         }
