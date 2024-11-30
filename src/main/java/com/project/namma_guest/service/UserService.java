@@ -20,6 +20,7 @@ import java.util.concurrent.TimeoutException;
 public class UserService {
     private final UsersRepository usersRepository;
     private final MailService mailService;
+
     @Autowired
     public UserService(UsersRepository userRepository, MailService mailService) {
         this.usersRepository = userRepository;
@@ -127,6 +128,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public ResponseEntity<String> setUserType(String type, String email) {
         //TODO: This is to resend the OTP for given email
         // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class
@@ -138,16 +140,16 @@ public class UserService {
         if(Utilities.isValidEmail(email)){
             Users user = usersRepository.findUsersByEmail(email);
             if(user!= null) {
-                if(user.getUserType()!=null) {
+                if(user.getUserType()==null) {
                     if (type.equalsIgnoreCase("USER") || type.equalsIgnoreCase("OWNER")) {
                         user.setUserType(type.toUpperCase());
                         usersRepository.save(user);
                         return ResponseEntity.ok("User Type updated successfully");
                     } else {
-                        throw new IllegalArgumentException("Invalid Type of usertype to set");
+                        throw new IllegalArgumentException("Invalid Type of user type");
                     }
                 } else {
-                    throw new IllegalArgumentException("User is already a specified");
+                    throw new IllegalArgumentException("User is already a registered with user type");
                 }
             } else {
                 throw new NullPointerException("No user found with given email");
