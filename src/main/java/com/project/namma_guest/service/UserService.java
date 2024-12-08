@@ -118,13 +118,13 @@ public class UserService {
                     usersRepository.save(user);
                     return new ResponseEntity<>("OTP sent to " + email, HttpStatus.OK);
                 } else {
-                    throw new TimeoutException("Wait for 2 min before retrying");
+                    return new ResponseEntity<>("OTP was sent < 2 min ago", HttpStatus.TOO_MANY_REQUESTS);
                 }
             } else {
-                throw new NullPointerException("No user found with given email");
+                return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
             }
         } else {
-            throw new IllegalArgumentException("Invalid Email Address");
+            return new ResponseEntity<>("Invalid Email Address", HttpStatus.BAD_REQUEST);
         }
     }
 
