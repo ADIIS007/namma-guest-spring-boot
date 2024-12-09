@@ -1,6 +1,8 @@
 package com.project.namma_guest.controller;
 
+import com.project.namma_guest.DTO.Request.UserUpdateDTO;
 import com.project.namma_guest.service.PayingGuestService;
+import com.project.namma_guest.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class HomeController {
     private final PayingGuestService payingGuestService;
-    public HomeController(PayingGuestService payingGuestService) {
+    private final UserService userService;
+    private final UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
+    public HomeController(PayingGuestService payingGuestService, UserService userService) {
         this.payingGuestService = payingGuestService;
+        this.userService = userService;
     }
 
     // Test weather the microservice is up or not
@@ -64,14 +69,21 @@ public class HomeController {
     }
 
     //Modify the User with respect to the user request
-    @PutMapping("/my-profile")
-    public ResponseEntity<String> updateMyProfile(){
+    @PutMapping("/my-profile/{emailId}")
+    public ResponseEntity<String> updateMyProfile(@PathVariable String emailId) {
         //TODO: Implement this method & return the details about the user
         // Step 1 - Get the user details using Email (later from the JWT token) - 404 Not Found
         // Step 2 - Validate the request (input validation, data format etc.) - 400 Bad Request
         // Step 3 - Update the user details (only update able fields) - 403 Forbidden
         // Step 4 - Return the details of the user if updated - 200 OK
-        return ResponseEntity.ok("My Profile Updated");
+
+        try{
+            return userService.updateProfile(emailId, userUpdateDTO);
+        }catch(IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Profile associated with PayingGuestId");
+        }
     }
 
     //API to request to join the hostel
