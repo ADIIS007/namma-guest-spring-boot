@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class HomeController {
     private final PayingGuestService payingGuestService;
     private final UserService userService;
-    private final UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
     public HomeController(PayingGuestService payingGuestService, UserService userService) {
         this.payingGuestService = payingGuestService;
         this.userService = userService;
@@ -76,7 +75,7 @@ public class HomeController {
         // Step 2 - Validate the request (input validation, data format etc.) - 400 Bad Request
         // Step 3 - Update the user details (only update able fields) - 403 Forbidden
         // Step 4 - Return the details of the user if updated - 200 OK
-
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO();
         try{
             return userService.updateProfile(emailId, userUpdateDTO);
         }catch(IllegalArgumentException e){
