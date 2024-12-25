@@ -1,5 +1,6 @@
 package com.project.namma_guest.service;
 
+import com.project.namma_guest.DTO.Request.UserUpdateDTO;
 import com.project.namma_guest.helper.MailService;
 import com.project.namma_guest.helper.Utilities;
 import com.project.namma_guest.model.Users;
@@ -157,5 +158,30 @@ public class UserService {
         } else {
             throw new IllegalArgumentException("Invalid Email Address");
         }
+    }
+    @Transactional
+    public ResponseEntity<String> updateProfile(String email, UserUpdateDTO userUpdateDTO) {
+        if(Utilities.isValidEmail(email)) {
+            Users user = usersRepository.findUsersByEmail(email);
+            if(user != null) {
+                if(user.getGiven_name()!=null && !(user.getGiven_name().equals(userUpdateDTO.getGiven_name()))) {
+                    user.setGiven_name(userUpdateDTO.getGiven_name());
+                }
+                if(user.getFamily_name()!=null && !(user.getFamily_name().equals(userUpdateDTO.getFamily_name()))) {
+                    user.setFamily_name(userUpdateDTO.getFamily_name());
+                }
+                if(user.getContactNumber() != null && !(user.getContactNumber().equals(userUpdateDTO.getPhone_number()))) {
+                    user.setContactNumber(userUpdateDTO.getPhone_number());
+                }
+                usersRepository.save(user);
+            }
+            else{
+                throw new NullPointerException("No user found with given email");
+            }
+        }
+        else{
+            throw new IllegalArgumentException("Invalid Email Address");
+        }
+        return ResponseEntity.ok("Profile updated successfully");
     }
 }
