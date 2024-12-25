@@ -28,6 +28,7 @@ public class OwnerController {
     @PostMapping("/hostelCreation/{email}")
     public ResponseEntity<?> setUpHostel(@RequestBody Hostel hostel,@PathVariable String email) {
         log.info("Setting up hostel for owner with id: {}", email);
+        log.info("Setting up - {}",hostel.getName());
         try{
             Long payingGuestId = payingGuestService.setUpHostel(email, hostel);
             return ResponseEntity.ok(payingGuestId);

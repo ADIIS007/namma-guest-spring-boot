@@ -56,8 +56,8 @@ public class PayingGuestService {
                 payingGuest.setWhatsappNumber(hostel.getWhatsappNumber());
 
                 GeometryFactory geometryFactory = new GeometryFactory();
-                Point point = geometryFactory.createPoint(new Coordinate(hostel.getLocation().getX(), hostel.getLocation().getY()));
-                payingGuest.setLocation(point);
+//                Point point = geometryFactory.createPoint(new Coordinate(hostel.getLocation().getX(), hostel.getLocation().getY()));
+//                payingGuest.setLocation(point);
 
                 usersRepository.save(owner);
                 payingGuestRepository.save(payingGuest);

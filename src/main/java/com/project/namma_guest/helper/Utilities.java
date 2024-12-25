@@ -44,10 +44,11 @@ public class Utilities {
     }
 
     public static boolean isValidString(String text, int length) {
-        return text == null || text.isEmpty() || text.length() >= length;
+        return text == null || text.isEmpty() || text.length() < length;
     }
 
     public static boolean isValidHostel(Hostel hostel) {
+        System.out.print("isValidHostel - "+hostel.getContactNumber());
         if(hostel==null) return false;
         if(!Utilities.isValidEmail(hostel.getEmail())) return false;
         if(!Utilities.isPhoneValid(hostel.getContactNumber())) return false;
@@ -56,7 +57,7 @@ public class Utilities {
         if(Utilities.isValidString(hostel.getAddress(), 15)) return false;
         if(Utilities.isValidString(hostel.getCity(), 7)) return false;
         if(Utilities.isValidString(hostel.getState(), 7)) return false;
-        if(Utilities.isValidString(hostel.getCountry(), 7)) return false;
-        return hostel.getLocation() != null;
+        if(Utilities.isValidString(hostel.getCountry(), 4)) return false;
+        return true;
     }
 }

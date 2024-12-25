@@ -28,4 +28,20 @@ public class Hostel {
 
     //Hostel Location
     private LatLng location;
+
+    // Override toString method
+    @Override
+    public String toString() {
+        return "Hostel{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                ", email='" + email + '\'' +
+                ", contactNumber='" + contactNumber + '\'' +
+                ", whatsappNumber='" + whatsappNumber + '\'' +
+                ", location=" + location +
+                '}';
+    }
 }
