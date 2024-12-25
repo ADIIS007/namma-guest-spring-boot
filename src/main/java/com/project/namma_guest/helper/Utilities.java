@@ -57,7 +57,6 @@ public class Utilities {
         if(Utilities.isValidString(hostel.getCity(), 7)) return false;
         if(Utilities.isValidString(hostel.getState(), 7)) return false;
         if(Utilities.isValidString(hostel.getCountry(), 7)) return false;
-        if(hostel.getLocation()==null) return false;
-        return true;
+        return hostel.getLocation() != null;
     }
 }

@@ -31,60 +31,41 @@ public class PayingGuestService {
     }
 
     @Transactional
-    public Long setUpHostel(String email) {
-        if(!Utilities.isValidEmail(email)) throw new IllegalArgumentException("Invalid email");
+    public Long setUpHostel(String email,Hostel hostel) {
+        if(!Utilities.isValidEmail(email)) throw new IllegalArgumentException("Invalid email.");
+        if(!Utilities.isValidHostel(hostel)) throw new IllegalArgumentException("Invalid Hostel Data.");
         Users owner = usersRepository.findUsersByEmail(email);
         if (owner!=null) {
             if(owner.getOwnsPayingGuest() != null) {
-                throw new IllegalStateException("User already has a hostel");
+                throw new IllegalStateException("User already has a hostel.");
+            } else if(owner.getUserType() == null || !owner.getUserType().equalsIgnoreCase("owner")) {
+                throw new IllegalStateException("User is not a owner.");
             } else {
                 PayingGuest payingGuest = new PayingGuest();
                 payingGuest = payingGuestRepository.save(payingGuest);
                 owner.setOwnsPayingGuest(payingGuest);
+
+                //Updating Hostel information
+                payingGuest.setName(hostel.getName());
+                payingGuest.setAddress(hostel.getAddress());
+                payingGuest.setCountry(hostel.getCountry());
+                payingGuest.setState(hostel.getState());
+                payingGuest.setCity(hostel.getCity());
+                payingGuest.setContactNumber(hostel.getContactNumber());
+                payingGuest.setEmail(hostel.getEmail());
+                payingGuest.setWhatsappNumber(hostel.getWhatsappNumber());
+
+                GeometryFactory geometryFactory = new GeometryFactory();
+                Point point = geometryFactory.createPoint(new Coordinate(hostel.getLocation().getX(), hostel.getLocation().getY()));
+                payingGuest.setLocation(point);
+
                 usersRepository.save(owner);
+                payingGuestRepository.save(payingGuest);
                 return payingGuest.getPayingGuestId();
             }
         } else {
-            throw new IllegalArgumentException("Owner not found");
+            throw new IllegalArgumentException("Owner not found.");
         }
-    }
-
-    @Transactional
-    public ResponseEntity<?> updateHostel(Hostel hostel, String email) {
-        //TODO: Sets all the data into the hostel
-        // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class - Unprocessable Entity 422
-        // Step 1 - Validate the request (input validation, data format etc.) - 400 Bad Request
-        // Step 2 - Get the UserId & HostelId & Check weather the person who is trying to update is the owner only - 403 Forbidden
-        // Step 3 - Update the hostel details (only update allowed fields) - 403 Forbidden
-        // Step 4 - Return the details of the hostel if updated - 200 OK
-        if(!Utilities.isValidEmail(email)){
-            throw new IllegalArgumentException("Invalid Email");
-        }
-        if(!Utilities.isValidHostel(hostel)){
-            throw new IllegalArgumentException("Invalid Hostel Data");
-        }
-        Users user = usersRepository.findUsersByEmail(email);
-        if(user == null) {
-            throw new IllegalArgumentException("Owner not found");
-        }
-        if (user.getOwnsPayingGuest() == null) {
-            throw new IllegalArgumentException("Paying guest not found for the user");
-        }
-        PayingGuest payingGuest = user.getOwnsPayingGuest();
-        payingGuest.setName(hostel.getName());
-        payingGuest.setAddress(hostel.getAddress());
-        payingGuest.setCountry(hostel.getCountry());
-        payingGuest.setState(hostel.getState());
-        payingGuest.setCity(hostel.getCity());
-        payingGuest.setContactNumber(hostel.getContactNumber());
-        payingGuest.setEmail(hostel.getEmail());
-        payingGuest.setWhatsappNumber(hostel.getWhatsappNumber());
-
-        GeometryFactory geometryFactory = new GeometryFactory();
-        Point point = geometryFactory.createPoint(new Coordinate(hostel.getLocation().getX(), hostel.getLocation().getY()));
-        payingGuest.setLocation(point);
-        payingGuestRepository.save(payingGuest);
-        return ResponseEntity.ok(payingGuest);
     }
 
     @Transactional
