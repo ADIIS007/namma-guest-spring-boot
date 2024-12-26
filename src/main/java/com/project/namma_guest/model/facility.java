@@ -27,7 +27,4 @@ public class facility {
     private long facilityId;
     private String facilityName;
     private String facilityDescription;
-
-
-
 }

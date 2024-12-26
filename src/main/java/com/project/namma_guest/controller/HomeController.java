@@ -85,6 +85,18 @@ public class HomeController {
         }
     }
 
+    @GetMapping("/hostelsNearMe/{latitude}/{longitude}")
+    public ResponseEntity<?> hostelsNearMe(@PathVariable double latitude, @PathVariable double longitude) {
+        //TODO: This lists the hostels near the given latitude and longitude
+        // Step 1 - Get the latitude and longitude & validate them
+        // Step 2 - Get the hostels near themselves
+        // Step 3 - if empty return null else
+        // Step 4 - Return the list
+        return ResponseEntity.ok("Hostels near me");
+    }
+
+
+    //TODO: These are the advanced methods that needs to be implemented with a bit of extra information & effort
     //API to request to join the hostel
     @PostMapping("/join-hostel")
     public ResponseEntity<String> joinHostel(@RequestBody String hostel) {
@@ -97,16 +109,6 @@ public class HomeController {
         return ResponseEntity.ok("Hostel joined successfully");
     }
 
-    //TODO: These are the advanced methods that needs to be implemented with a bit of extra information & effort
-
     //List of hostels near the specified latitude and longitude
-    @GetMapping("/hostelsNearMe/{latitude}/{longitude}")
-    public ResponseEntity<?> hostelsNearMe(@PathVariable double latitude, @PathVariable double longitude) {
-        //TODO: This lists the hostels near the given latitude and longitude
-        // Step 1 - Get the latitude and longitude & validate them
-        // Step 2 - Get the hostels near themselves
-        // Step 3 - if empty return null else
-        // Step 4 - Return the list
-        return ResponseEntity.ok("Hostels near me");
-    }
+
 }

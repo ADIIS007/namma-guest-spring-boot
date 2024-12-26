@@ -55,26 +55,6 @@ public class OwnerController {
         }
     }
 
-    // Set up the Room while Creation
-    @PostMapping("/roomCreation")
-    public ResponseEntity<?> setUpRoom(@RequestBody Id ownerId) {
-        //TODO: This is same as the above function but may be bit complex
-        return ResponseEntity.ok(":)");
-    }
-
-    // Update the Hostel details after creating
-    @PutMapping("/RoomUpdate/{roomId}")
-    public ResponseEntity<String> roomDataUpdate(@PathVariable String roomId, @RequestBody String roomData) {
-        //TODO: Implement this method & return the room data
-        // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class - Unprocessable Entity 422
-        // Step 1 - Validate the request (input validation, data format etc.) - 400 Bad Request
-        // Step 2 - Get the UserId & HostelId & Check weather the person who is trying to update is the owner only - 403 Forbidden
-        // Step 3 - Update the hostel details (only update allowed fields) - 403 Forbidden
-        // Step 4 - Return the details of the hostel if updated - 200 OK
-        String str = "Hostel Data: " + roomData;
-        return ResponseEntity.ok(str);
-    }
-
     // Load the hostel details from the database & to make a user look
     @GetMapping("/hostelDetails/{id}")
     public ResponseEntity<String> hostelDetails(@PathVariable String id) {
@@ -86,6 +66,14 @@ public class OwnerController {
         // Step 4 - Return the details
         String str = "Hostel Details: getEmail";
         return ResponseEntity.ok(str);
+    }
+
+    // Delete the hostel details from the database
+    @DeleteMapping("/hostelDeletion")
+    public ResponseEntity<String> hostelDeletion() {
+        //TODO: To be Implemented later on kindly dont touch it
+        String str = "Hostel Details: deleteEmail";
+        return ResponseEntity.ok("TO BE IMPLEMENTED AT LAST");
     }
 
     //get the room details from database and to make a user look
@@ -101,6 +89,28 @@ public class OwnerController {
         return ResponseEntity.ok(str);
     }
 
+    // Update the Hostel details after creating
+    @PutMapping("/RoomUpdate/{roomId}")
+    public ResponseEntity<String> roomDataUpdate(@PathVariable String roomId, @RequestBody String roomData) {
+        //TODO: Implement this method & return the room data
+        // Step 0 - Validate the Incoming data weather null or no make a function in helper folder & validation Class - Unprocessable Entity 422
+        // Step 1 - Validate the request (input validation, data format etc.) - 400 Bad Request
+        // Step 2 - Get the UserId & HostelId & Check weather the person who is trying to update is the owner only - 403 Forbidden
+        // Step 3 - Update the hostel details (only update allowed fields) - 403 Forbidden
+        // Step 4 - Return the details of the hostel if updated - 200 OK
+        String str = "Hostel Data: " + roomData;
+        return ResponseEntity.ok(str);
+    }
+
+    // Set up the Room while Creation
+    @PostMapping("/roomCreation")
+    public ResponseEntity<?> setUpRoom(@RequestBody Id ownerId) {
+        //TODO: This is same as the above function but may be bit complex
+        return ResponseEntity.ok(":)");
+    }
+
+    //TODO: Implement these methods later these are for advanced topics
+
     //This gives the list of people present in each room of the hostel also show the payment status and the expiary of the stay
     @GetMapping("/membersInfo/{hostelId}")
     public ResponseEntity<?> membersInfo(@PathVariable String hostelId) {
@@ -112,16 +122,6 @@ public class OwnerController {
         // Step 4 - Return the details along with payment status and expiary of the stay
         String str = "membersInfo";
         return ResponseEntity.ok(str);
-    }
-
-    //TODO: Implement these methods later these are for advanced topics
-
-    // Delete the hostel details from the database
-    @DeleteMapping("/hostelDeletion")
-    public ResponseEntity<String> hostelDeletion() {
-        //TODO: To be Implemented later on kindly dont touch it
-        String str = "Hostel Details: deleteEmail";
-        return ResponseEntity.ok("TO BE IMPLEMENTED AT LAST");
     }
 
     // User Data this helps user to edit their profile data
